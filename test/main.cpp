@@ -43,6 +43,9 @@ TEST(Simulation, addgenes) {
     sim.add_genes(ng);
     EXPECT_EQ(ng, sim.size());
     EXPECT_EQ(4*ng, sim.system_size());
+    EXPECT_EQ(_PLOIDY_, sim.get_gene(0)->ploidy());
+    EXPECT_EQ(sim.get_gene(3)->ploidy(), 
+              sim.get_gene(3)->state()+sim.get_gene(3)->inactive());
 }
 
 TEST(System, initRun) {
