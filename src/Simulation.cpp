@@ -35,11 +35,23 @@ Simulation::~Simulation() {
     std::cout.flush();
 }
 
+//A FINIR 
 void Simulation::load_configuration(const std::string &infile) {
     try {
-
-        /*******/
-
+		std::ifstream confstr(infile);
+		std::string item, key, line;
+		
+		if(confstr.is_open()) {
+			while(std::getline(confstr, line)) {
+				line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
+				if (line[0] == '#') continue;
+				std::stringstream ss(line);
+				std::getline(ss, key, ':');
+				if (key.empty()) continue;
+				
+				}
+				confstr.close();
+		}
         } else throw(CFILE_ERROR("Could not open configuration file " + infile));
     } catch(std::ifstream::failure &e) {
         throw(CFILE_ERROR("Error with configuration file " + infile + ": " + e.what()));
