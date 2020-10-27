@@ -35,24 +35,32 @@ Simulation::~Simulation() {
     std::cout.flush();
 }
 
-//A FINIR 
 void Simulation::load_configuration(const std::string &infile) {
     try {
 		std::ifstream confstr(infile);
-		std::string item, key, line;
+		std::string value, key, line;
+		
 		
 		if(confstr.is_open()) {
 			while(std::getline(confstr, line)) {
 				line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
 				if (line[0] == '#') continue;
 				std::stringstream ss(line);
+				//est-ce que c'est vraiment utile ça ?
 				std::getline(ss, key, ':');
-				if (key.empty()) continue;
-				
+				if (key.empty()) continue; // pourqoi ?, ça fait quoi ça ?
+				std::array<double, 6> g({_RNG->uniform_double(0,1), _RNG->uniform_double(0,1), _RNG->uniform_double(0,1), _RNG->uniform_double(0,1), _RNG->uniform_double(0,1), _RNG->uniform_double(0,1)});
+				int i(0);
+				while(std::getline(ss, value, ',')) {
+					double numb = stod(value);
+					g[i] = numb;
+					++i;
 				}
-				confstr.close();
-		}
-        } else throw(CFILE_ERROR("Could not open configuration file " + infile));
+				this->add_gene(g);
+				}			
+				confstr.close();		
+				}
+         else throw(CFILE_ERROR("Could not open configuration file " + infile));
     } catch(std::ifstream::failure &e) {
         throw(CFILE_ERROR("Error with configuration file " + infile + ": " + e.what()));
     }
