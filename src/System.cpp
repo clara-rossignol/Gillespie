@@ -32,6 +32,14 @@ size_t System::add_reaction(const std::vector<size_t> ins,
     return ridx;
 }
 
+double System::total_rate() const {
+	double tot(0.0);
+	for(auto I : _reactions) {
+		tot += I->rate();
+	}
+	return tot;
+}
+
 double System::reaction_coefficient(size_t id) const {
     if (id < _reactions.size()) return _reactions[id]->coeff();
     return -1;
