@@ -47,16 +47,16 @@ void Simulation::load_configuration(const std::string &infile) {
 				std::stringstream ss(line);
 				std::getline(ss, key, ':');
 				if (key.empty()) continue;
-				std::array<double, 6> g({_RNG->uniform_double(0,1), _RNG->uniform_double(0,1), _RNG->uniform_double(0,1), _RNG->uniform_double(0,1), _RNG->uniform_double(0,1), _RNG->uniform_double(0,1)});
-				for(size_t i=0; (std::getline(ss, value, ','))and(i<g.size()); i++) {
-					g[i]= stod(value);
+				std::array<double, 6> tab;
+				_RNG->RandomNumbers::uniform_double<std::array<double,6>>(tab);
+				for(size_t i=0; (std::getline(ss, value, ','))and(i<tab.size()); i++) {
+					tab[i]= stod(value);
 				}
-				this->add_gene(g);
+				this->add_gene(tab);
 				}			
 				confstr.close();		
 				}
          else {
-			 this->add_genes();
 			 throw(CFILE_ERROR("Could not open configuration file " + infile));
 		 }
     } catch(std::ifstream::failure &e) {

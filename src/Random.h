@@ -53,22 +53,19 @@ template<class T> void RandomNumbers::normal(T &res, double mean, double sd) {
     for (auto I=res.begin(); I!=res.end(); I++) *I = norm(rng);
 }
 
-template<class T> void RandomNumbers::uniform_int(T &res, int lower, int upper)
-{
+template<class T> void RandomNumbers::uniform_int(T &res, int lower, int upper) {
 	std::uniform_int_distribution<> unif(lower, upper);
 	for (auto I=res.begin(); I!=res.end(); I++) *I = unif(rng);
 }
 
-template<class T> void RandomNumbers::exponential(T &res, const double rate)
-{
+template<class T> void RandomNumbers::exponential(T &res, const double rate) {
 	std::exponential_distribution<> expo(rate);
 	for (auto I=res.begin(); I!=res.end(); I++) *I = expo(rng);
 }
 
-template<class T> void RandomNumbers::poisson(T &res, double mean)
-{
+template<class T> void RandomNumbers::poisson(T &res, double mean) {
 	std::poisson_distribution<> poiss(mean);
-	for (auto I=res.begin(); I!=res.end(); I++) *I = poiss(mean);
+	for (auto I=res.begin(); I!=res.end(); I++) *I = poiss(rng);
 }
 
 extern RandomNumbers *_RNG;
